@@ -5,25 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f443cb86-d2bf-4da7-8573-3ee94a30efde" name="Changes" comment="All main and additional tasks have been completed">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/templates/catalog/contacts.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/templates/catalog/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/catalog/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/online_store/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/online_store/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/online_store/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/online_store/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/online_store/wsgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/catalog/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catalog/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/catalog/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +78,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764784838282</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="All main and additional tasks have been completed">
+      <option name="closed" value="true" />
+      <created>1764788142484</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1764788142484</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

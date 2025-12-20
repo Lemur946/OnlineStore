@@ -10,8 +10,14 @@ def home(request: HttpRequest) -> HttpResponse:
 Receives a request object and returns a rendered HTML template
 of the home page.
     """
-    # Just render and return the main page template
-    return render(request, 'catalog/home.html')
+    # Get all products from the database
+    products = Product.objects.all()
+
+    context = {
+        'products': products,
+        'title': 'Главная страница'
+    }
+    return render(request, 'catalog/home.html', context)
 
 
 def contacts(request: HttpRequest) -> HttpResponse:

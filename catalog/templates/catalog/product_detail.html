@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ product.name }}</h1>
+
+    <!-- Вывод изображения -->
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" width="300">
+    {% else %}
+        <p>Изображение отсутствует</p>
+    {% endif %}
+
+    <p>{{ product.description }}</p>
+    <p><strong>Цена:</strong> {{ product.price }} руб.</p>
+    <p><strong>Категория:</strong> {{ product.category.name }}</p>
+
+    <hr>
+    <p><em>Дата создания: {{ product.created_at|date:"d.m.Y H:i" }}</em></p>
+    <p><em>Дата последнего изменения: {{ product.updated_at|date:"d.m.Y H:i" }}</em></p>
+
+    <a href="/">На главную</a>
+</body>
+</html>

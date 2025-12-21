@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse
+from .models import Product
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -9,8 +10,14 @@ def home(request: HttpRequest) -> HttpResponse:
 Receives a request object and returns a rendered HTML template
 of the home page.
     """
-    # Just render and return the main page template
-    return render(request, 'catalog/home.html')
+    # Get all products from the database
+    products = Product.objects.all()
+
+    context = {
+        'products': products,
+        'title': 'Главная страница'
+    }
+    return render(request, 'catalog/home.html', context)
 
 
 def contacts(request: HttpRequest) -> HttpResponse:
@@ -30,3 +37,17 @@ def contacts(request: HttpRequest) -> HttpResponse:
 
     # Regardless of the method, we render and return the contact page template
     return render(request, 'catalog/contacts.html')
+
+
+def product_detail(request, pk: int):
+    """
+    A controller for displaying detailed product information.
+    """
+    # Get the product object or return 404 if it is not found
+    product = get_object_or_404(Product, pk=pk)
+
+    context = {
+        'product': product,
+        'title': f'Продукт - {product.name}'  # Dynamic Page Title
+    }
+    return render(request, 'catalog/product_detail.html', context)

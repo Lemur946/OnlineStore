@@ -1,12 +1,11 @@
-# catalog/urls.py
 from django.urls import path
-from .views import home, contacts
+from .views import home, contacts, product_detail
 
-# Это нужно для того, чтобы Django мог однозначно определять
-# URL-имена, принадлежащие этому приложению.
+# URL names belonging to this application.
 app_name = 'catalog'
 
 urlpatterns = [
     path('', home, name='home'),
     path('contacts/', contacts, name='contacts'),
+    path('products/<int:pk>/', product_detail, name='product_detail'),
 ]

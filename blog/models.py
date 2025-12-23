@@ -1,19 +1,29 @@
 from django.db import models
+from typing import Optional
 
-NULLABLE = {'blank': True, 'null': True}
+NULLABLE: dict[str, bool] = {'blank': True, 'null': True}
 
 
 class Blog(models.Model):
-    title = models.CharField(max_length=150, verbose_name='Заголовок')
-    content = models.TextField(verbose_name='Содержимое')
-    preview = models.ImageField(upload_to='blog_previews/', verbose_name='Превью', **NULLABLE)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    is_published = models.BooleanField(default=False, verbose_name='Признак публикации')
-    views_count = models.IntegerField(default=0, verbose_name='Количество просмотров')
+    """
+    A model representing a blog post.
+    """
+    title: str = models.CharField(max_length=150, verbose_name='Заголовок')
+    content: str = models.TextField(verbose_name='Содержимое')
+    preview: Optional[str] = models.ImageField(upload_to='blog_previews/', verbose_name='Превью', **NULLABLE)
+    created_at: models.DateTimeField = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    is_published: bool = models.BooleanField(default=False, verbose_name='Признак публикации')
+    views_count: int = models.IntegerField(default=0, verbose_name='Количество просмотров')
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Returns a string representation of the article object.
+        """
         return self.title
 
     class Meta:
-        verbose_name = 'Статья'
-        verbose_name_plural = 'Статьи'
+        """
+        Meta class for the Blog model.
+        """
+        verbose_name: str = 'Статья'
+        verbose_name_plural: str = 'Статьи'

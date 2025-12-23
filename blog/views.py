@@ -1,6 +1,8 @@
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import Blog
+from django.core.mail import send_mail
+from online_store.settings import EMAIL_BACKEND
 
 
 class BlogCreateView(CreateView):
@@ -27,6 +29,15 @@ class BlogDetailView(DetailView):
         self.object = super().get_object(queryset)
         # Increasing the view counter
         self.object.views_count += 1
+        # We check whether the counter has reached exactly 100 on this viewing
+        if self.object.views_count == 100:
+            send_mail(
+                subject='Поздравляем! Ваша статья очень популярна!',
+                message=f'Ваша статья "{self.object.title}" достигла 100 просмотров!',
+                from_email=EMAIL_BACKEND,
+                recipient_list=['your_real_email@example.com']
+
+            )
         # Save changes to the database
         self.object.save()
         return self.object

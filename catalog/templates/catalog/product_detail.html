@@ -1,19 +1,19 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-    <h1>{{ product.name }}</h1>
+    <h1>{{ object.name }}</h1>
     
-    {% if product.image %}
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" width="300">
+    {% if object.image %}
+        <img src="{{ object.image.url }}" alt="{{ object.name }}" width="300">
     {% else %}
         <p>Изображение отсутствует</p>
     {% endif %}
 
-    <p>{{ product.description }}</p>
-    <p><strong>Цена:</strong> {{ product.price }} руб.</p>
-    <p><strong>Категория:</strong> {{ product.category.name }}</p>
+    <p>{{ object.description }}</p>
+    <p><strong>Цена:</strong> {{ object.price }} руб.</p>
+    <p><strong>Категория:</strong> {{ object.category.name }}</p>
     
     <hr>
-    <p><em>Дата создания: {{ product.created_at|date:"d.m.Y H:i" }}</em></p>
-    <p><em>Дата последнего изменения: {{ product.updated_at|date:"d.m.Y H:i" }}</em></p>
+    <p><em>Дата создания: {{ object.created_at|date:"d.m.Y H:i" }}</em></p>
+    <p><em>Дата последнего изменения: {{ object.updated_at|date:"d.m.Y H:i" }}</em></p>
 {% endblock %}

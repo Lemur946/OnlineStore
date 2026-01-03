@@ -1,0 +1,62 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">
+                        {% if object %}
+                        Редактировать продукт
+                        {% else %}
+                        Создать новый продукт
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="card-body">
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Display errors not related to fields (if any) -->
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+
+                        <!-- Displaying form fields with their errors -->
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                            <div class="alert alert-danger mt-1 p-1">
+                                {{ error }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">
+                                {% if object %}
+                                Сохранить
+                                {% else %}
+                                Создать
+                                {% endif %}
+                            </button>
+                            <a href="{% url 'catalog:home' %}"
+                               class="btn btn-lg btn-block btn-outline-secondary">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

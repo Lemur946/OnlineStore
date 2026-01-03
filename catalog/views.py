@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse
+from django.urls import reverse_lazy
+
 from .models import Product
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import UpdateView, CreateView, ListView, DetailView, TemplateView
+from .forms import ProductForm
 
 
 # Creating a CBV for the homepage
@@ -35,3 +38,15 @@ class ProductDetailView(DetailView):
         product = self.get_object()
         context['title'] = f'Skystore - {product.name}'
         return context
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:home')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('catalog:home')

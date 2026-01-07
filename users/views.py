@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.core.mail import send_mail
 from django.conf import settings
 
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UserProfileForm
 from .models import User
 
 
@@ -24,3 +24,13 @@ class RegisterView(CreateView):
             recipient_list=[user.email]
         )
         return super().form_valid(form)
+
+class ProfileView(UpdateView):
+    model = User
+    form_class = UserProfileForm
+    success_url = reverse_lazy('users:profile')
+    template_name = 'users/profile.html'
+
+    def get_object(self, queryset=None):
+        # Гарантируем, что пользователь может редактировать только свой профиль
+        return self.request.user

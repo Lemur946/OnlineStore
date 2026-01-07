@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from .models import Product
 from django.views.generic import UpdateView, CreateView, ListView, DetailView, TemplateView, DeleteView
 from .forms import ProductForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Creating a CBV for the homepage
@@ -29,7 +30,7 @@ class ContactsTemplateView(TemplateView):
 
 
 # Creating a CBV for a product detail page
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
 
@@ -40,17 +41,18 @@ class ProductDetailView(DetailView):
         return context
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
 
-class ProductDeleteView(DeleteView):
+
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:home')

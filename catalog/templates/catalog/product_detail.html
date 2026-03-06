@@ -1,19 +1,44 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-    <h1>{{ object.name }}</h1>
-    
-    {% if object.image %}
-        <img src="{{ object.image.url }}" alt="{{ object.name }}" width="300">
-    {% else %}
-        <p>Изображение отсутствует</p>
-    {% endif %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h1 class="card-title">{{ object.name }}</h1>
+        </div>
+        <div class="card-body">
+            {% if object.image %}
+                <img src="{{ object.image.url }}" alt="{{ object.name }}" class="img-fluid mb-3" style="max-width: 400px;">
+            {% else %}
+                <p>Изображение отсутствует</p>
+            {% endif %}
 
-    <p>{{ object.description }}</p>
-    <p><strong>Цена:</strong> {{ object.price }} руб.</p>
-    <p><strong>Категория:</strong> {{ object.category.name }}</p>
-    
-    <hr>
-    <p><em>Дата создания: {{ object.created_at|date:"d.m.Y H:i" }}</em></p>
-    <p><em>Дата последнего изменения: {{ object.updated_at|date:"d.m.Y H:i" }}</em></p>
+            <p class="card-text">{{ object.description }}</p>
+            <p><strong>Цена:</strong> {{ object.price }} руб.</p>
+            <p><strong>Категория:</strong> {{ object.category.name }}</p>
+
+            <hr>
+            <p class="text-muted"><em>Дата создания: {{ object.created_at|date:"d.m.Y H:i" }}</em></p>
+            <p class="text-muted"><em>Дата последнего изменения: {{ object.updated_at|date:"d.m.Y H:i" }}</em></p>
+        </div>
+
+        <div class="card-footer">
+
+            {# --- EDIT BUTTON --- #}
+            {# Show only if the current user is the product owner #}
+            {% if user == object.owner %}
+                <a href="{% url 'catalog:product_update' object.pk %}" class="btn btn-primary">Редактировать</a>
+            {% endif %}
+
+            {# --- DELETE BUTTON --- #}
+            {# Show if the user is the owner OR has the right to delete #}
+            {% if user == object.owner or perms.catalog.delete_product %}
+                <a href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-danger">Удалить</a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <a href="{% url 'catalog:home' %}" class="btn btn-secondary mt-3">Назад к списку</a>
+
 {% endblock %}

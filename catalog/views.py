@@ -4,7 +4,7 @@ from django.urls import reverse_lazy, reverse
 
 from .models import Product
 from django.views.generic import UpdateView, CreateView, ListView, DetailView, TemplateView, DeleteView
-from .forms import ProductForm
+from .forms import ProductForm, ModeratorProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
@@ -60,7 +60,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Product
-    fields = ('name', 'description', 'category', 'price', 'image',)  # The owner does not change
+
     success_url = reverse_lazy('catalog:home')
     login_url = reverse_lazy('users:login')
 
@@ -68,8 +68,30 @@ class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         """
         Verifying that the user is the owner of the product.
         """
+        user = self.request.user
         product = self.get_object()
-        return self.request.user == product.owner
+
+        # The owner has access
+        is_owner = (user == product.owner)
+        # And for someone who has the standard 'change_product' right
+        can_change = user.has_perm('catalog.change_product')
+
+        return is_owner or can_change
+
+    def get_form_class(self):
+        """Returns the form class depending on the user's permissions."""
+        user = self.request.user
+
+        # If the user is the product owner
+        if user == self.object.owner:
+            return ProductForm
+
+        # If the user has edit permissions but is not the owner (moderator)
+        if user.has_perm('catalog.change_product'):
+            return ModeratorProductForm
+
+        # If the user does not have rights
+        raise Http404("У вас нет прав для редактирования этого продукта.")
 
     def handle_no_permission(self):
         """

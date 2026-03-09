@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -42,6 +43,8 @@ class Product(models.Model):
     is_available = models.BooleanField(default=True, verbose_name='В наличии')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата последнего изменения')
+    is_published = models.BooleanField(default=False, verbose_name='опубликовано')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE, verbose_name='владелец')
 
     def __str__(self) -> str:
         """
@@ -55,3 +58,9 @@ class Product(models.Model):
         """
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+        permissions = [
+            (
+                'can_unpublish_product',  # Rights name
+                'Can unpublish product'  # Its description is in the admin panel
+            )
+        ]

@@ -3,6 +3,15 @@ from .models import Product
 from .constants import FORBIDDEN_WORDS
 
 
+class StyleFormMixin:
+    """Mixin for stylizing shapes."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+
 class ProductForm(forms.ModelForm):
     """
     A form for creating and editing products with custom validation and styling.
@@ -70,3 +79,12 @@ class ProductForm(forms.ModelForm):
                 raise forms.ValidationError("Недопустимый формат файла. Разрешены только PNG, JPG, JPEG.")
 
         return image
+
+
+class ModeratorProductForm(StyleFormMixin, forms.ModelForm):
+    """Product moderator form."""
+
+    class Meta:
+        model = Product
+        # Fields that a moderator can edit
+        fields = ('description', 'category', 'is_published',)
